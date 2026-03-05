@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  chargepoint-grid-guard:
+    image: ghcr.io/mccahan/chargepoint-grid-guard:main
+    container_name: chargepoint-grid-guard
+    restart: unless-stopped
+    environment:
+      CHARGEPOINT_USERNAME: ${CHARGEPOINT_USERNAME}
+      CHARGEPOINT_PASSWORD: ${CHARGEPOINT_PASSWORD}
+      POWERWALL_URL: http://pypowerwall:8675
+      POLL_INTERVAL: 30
+      RESUME_CHARGING: "false"
+      LOG_LEVEL: INFO
+      # DRY_RUN: "true"  # Uncomment to test without stopping charging
+    networks:
+      - powerwall_network
+
+networks:
+  powerwall_network:
+    external: true
