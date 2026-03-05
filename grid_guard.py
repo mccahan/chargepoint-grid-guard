@@ -53,7 +53,7 @@ class GridGuard:
     def get_grid_status(self) -> bool:
         """Query pypowerwall for grid status. Returns True if grid is online."""
         try:
-            response = requests.get(f"{POWERWALL_URL}/csv/v2", timeout=10)
+            response = requests.get(f"{POWERWALL_URL}/csv/v2", timeout=30)
             response.raise_for_status()
             
             # Parse CSV: Grid,Home,Solar,Battery,BatteryLevel,GridStatus,Reserve
