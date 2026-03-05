@@ -58,12 +58,12 @@ class GridGuard:
             
             # Parse CSV: Grid,Home,Solar,Battery,BatteryLevel,GridStatus,Reserve
             lines = response.text.strip().split("\n")
-            if len(lines) < 2:
-                logger.warning("Unexpected pypowerwall response format")
+            if not lines or not lines[0]:
+                logger.warning("Empty pypowerwall response")
                 return True  # Assume online if we can't parse
             
-            # Skip header if present
-            data_line = lines[1] if lines[0].startswith("Grid") else lines[0]
+            # Skip header if present (first line starts with "Grid")
+            data_line = lines[1] if len(lines) > 1 and lines[0].startswith("Grid") else lines[0]
             values = data_line.split(",")
             
             if len(values) >= 6:
